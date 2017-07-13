@@ -7,6 +7,7 @@ require 'random_data'
   body: RandomData.random_paragraph
   )
 end
+unique_post = Post.find_or_create_by!(title: "my unique title", body: "my unique body")
 
 posts = Post.all
 
@@ -18,11 +19,19 @@ posts = Post.all
   )
 end
 
+Comment.find_or_create_by!(body: "my unique comment", post: unique_post)
+
+unique_post_count = Post.where(title:"my unique title", body: "my unique body").count
+unique_comment_count =  Comment.all.where(body: "my unique comment").count
+
 puts "".center(40,"*")
 puts
 puts "Finish seeding".center(40)
 puts "#{Post.count} = posts created".center(40)
 puts "#{Comment.count} = comments created".center(40)
+puts
+puts "#{unique_post_count} = unique post".center(40)
+puts "#{unique_comment_count} = unique comment".center(40)
 puts
 puts "".center(40,"*")
 
