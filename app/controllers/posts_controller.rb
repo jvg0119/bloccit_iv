@@ -4,10 +4,24 @@ class PostsController < ApplicationController
   end
 
   def show
-
+    @post = Post.find(params[:id])
   end
 
   def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new
+    @post.title = params[:post][:title]
+    @post.body = params[:post][:body]
+    if @post.save
+      flash[:notice] = "Your post was saved successfully!"
+      redirect_to post_path(@post)
+    else
+      flash[:notice] = "There was an error saving the post. Please try again."
+      render :new
+    end
   end
 
   def edit
