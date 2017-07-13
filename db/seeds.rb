@@ -1,5 +1,7 @@
 require 'random_data'
 
+# Post.destroy_all
+
 # create posts
 50.times do
   Post.create!(
