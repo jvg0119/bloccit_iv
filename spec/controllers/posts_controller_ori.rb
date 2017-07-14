@@ -1,8 +1,9 @@
+# original
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-  let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
-  #let(:my_post) { Post.create!(title: "old title", body: RandomData.random_paragraph) }
+#  let(:my_post) { Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
+  let(:my_post) { Post.create!(title: "old title", body: RandomData.random_paragraph) }
 
   describe "GET #index" do
     it "returns http success" do
@@ -88,46 +89,39 @@ RSpec.describe PostsController, type: :controller do
 
   describe "PUT #update" do
     it "updates post with expected attributes" do
-      new_title = RandomData.random_sentence
+      p "my_post = #{my_post.title}"
+      new_title = "new title"#RandomData.random_sentence
       new_body = RandomData.random_paragraph
       put :update, params: { id: my_post.id, post: { title: new_title, body: new_body } }
       updated_post = assigns(:post)
-
       expect(updated_post.id).to eq(my_post.id)
       expect(updated_post.title).to eq(new_title)
       expect(updated_post.body).to eq(new_body)
+      expect(updated_post.title).to eq("new title")
+  #    expect(updated_post).to eq(my_post) # this is passing
+  #   expect(updated_post.title).to eq(my_post.reload) # this is failing
+      expect(updated_post.title).to eq(my_post.reload.title) # add .reload to make it pass
+      # my_post keeps its values until you perform the .reload  on it
+      # then it will show the updated value
+      # that's the reason why update_post.title != my_post.title
+
+      p "id - #{my_post.id}"
+      p updated_post.id == my_post.id
+      p "id - #{updated_post.id}"
+      p updated_post == my_post
+      p "my_post.title = #{my_post.title}"
+      p "updated_post.title = #{updated_post.title}"
+      p my_post.body
+
+    #  expect(updated_post.body).to eq(my_post.body)
     end
     it "redirects to the updated post" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
       put :update, params: { id: my_post.id, post: { title: new_title, body: new_body } }
-      # expect(response).to redirect_to(post_path(assigns(:post))) # OK
-      # expect(response).to redirect_to(post_path(my_post)) # OK
-      expect(response).to redirect_to(my_post) # shortcut for the above
+      expect(response).to redirect_to(post_path(assigns(:my_post)))
     end
   end   # PUT #update
-
-  describe "DELETE #destroy" do
-    # it "removes the selected @post" do  # works
-    # #my_post
-    #   expect{ delete :destroy, params: { id: my_post.id }
-    # }.to change{Post.count}.by(-1)
-    # end
-
-    it "removes the selected @post #1" do
-      delete :destroy, params: { id: my_post.id }
-      expect(Post.where(id: my_post.id).size).to be_zero
-    end
-    it "removes the selected @post #2" do
-      delete :destroy, params: { id: my_post.id }
-      count = Post.where(id: my_post.id).size
-      expect(count).to eq(0)
-    end
-    it "redirects to posts index view" do
-      delete :destroy, params: { id: my_post.id }
-      expect(response).to redirect_to(posts_path)
-    end
-  end   # DELETE #destroy
 
 
 end
