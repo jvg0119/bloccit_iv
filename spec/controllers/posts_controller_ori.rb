@@ -99,7 +99,7 @@ RSpec.describe PostsController, type: :controller do
       expect(updated_post.body).to eq(new_body)
       expect(updated_post.title).to eq("new title")
   #    expect(updated_post).to eq(my_post) # this is passing
-  #   expect(updated_post.title).to eq(my_post.reload) # this is failing
+  #   expect(updated_post.title).to eq(my_post.title) # this is failing
       expect(updated_post.title).to eq(my_post.reload.title) # add .reload to make it pass
       # my_post keeps its values until you perform the .reload  on it
       # then it will show the updated value
