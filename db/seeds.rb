@@ -1,15 +1,23 @@
 require 'random_data'
 
-# Post.destroy_all
+# create topics
+15.times do
+  Topic.create!(
+  name: RandomData.random_sentence,
+  description: RandomData.random_paragraph,
+  )
+end
+topics = Topic.all
 
+# Post.destroy_all
 # create posts
 50.times do
   Post.create!(
   title: RandomData.random_sentence,
-  body: RandomData.random_paragraph
+  body: RandomData.random_paragraph,
+  topic: topics.sample
   )
 end
-
 posts = Post.all
 
 # create comments
@@ -23,6 +31,7 @@ end
 puts "".center(40,"*")
 puts
 puts "Finish seeding".center(40)
+puts "#{Topic.count} = topics created".center(40)
 puts "#{Post.count} = posts created".center(40)
 puts "#{Comment.count} = comments created".center(40)
 puts

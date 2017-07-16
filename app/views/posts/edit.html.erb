@@ -13,8 +13,8 @@
 
     <div class="col-sm-8">
 
-      <%= form_for @post do |f| %>
-
+      <%#= form_for @post, url:  topic_post_path(@post.topic, @post)  do |f| %><!-- long way -->
+      <%= form_for [@post.topic, @post] do |f| %>
         <div class="form-group">
           <%= f.label :title %>
           <%= f.text_field :title, class: "form-control", placeholder: "Enter post title", autofocus: true %>
