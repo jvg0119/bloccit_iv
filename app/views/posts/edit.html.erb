@@ -14,22 +14,7 @@
     <div class="col-sm-8">
 
       <%#= form_for @post, url:  topic_post_path(@post.topic, @post)  do |f| %><!-- long way -->
-      <%= form_for [@post.topic, @post] do |f| %>
-        <div class="form-group">
-          <%= f.label :title %>
-          <%= f.text_field :title, class: "form-control", placeholder: "Enter post title", autofocus: true %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :body %>
-          <%= f.text_area :body, rows: 8, class: "form-control", placeholder: "Enter post body" %>
-        </div>
-
-        <div class="form-group">
-          <%= f.submit "Save", class: "btn btn-success" %>
-        </div>
-
-      <% end %>
+      <%= render partial: 'form', locals: { topic: @post.topic, post: @post } %>
 
     </div>
   </div>

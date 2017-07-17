@@ -1,0 +1,33 @@
+
+<%= form_for [topic, post] do |f| %>
+
+
+    <% if post.errors.any? %>
+      <div>
+        <h4><%= pluralize post.errors.count, "error" %> occured: </h4>
+        <% post.errors.full_messages.each do |msg| %>
+          <ul>
+            <li><%= msg %></li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+  <!-- <div class="form-group"> -->
+  <!-- <div class="form-group has-warning"> puts error styling-->
+  <%= form_tag_group(post.errors[:title]) do  %>
+    <%#= post.errors[:title] %>
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control", placeholder: "Enter post title", autofocus: true %>
+  <% end %>
+
+  <%= form_tag_group(post.errors[:body]) do  %>
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: 8, class: "form-control", placeholder: "Enter post body" %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.submit "Save", class: "btn btn-success" %>
+  </div>
+
+<% end %>
