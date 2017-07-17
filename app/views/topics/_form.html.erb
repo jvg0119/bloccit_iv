@@ -1,0 +1,28 @@
+
+<%= form_for topic do |f| %>
+
+  <% if topic.errors.any? %>
+    <h4><%= pluralize topic.errors.count, "error" %></h4>
+      <% topic.errors.full_messages.each do |msg| %>
+        <ul>
+          <li><%= msg %></li>
+        </ul>
+      <% end %>
+  <% end %>
+
+  <%= form_tag_group(topic.errors[:name]) do %>
+  <%#= topic.errors[:name] %>
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter topic name", autofocus: true %>
+  <% end %>
+
+  <%= form_tag_group(topic.errors[:description]) do %>
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 8, class: "form-control", placeholder: "Enter topic description" %>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.submit "Save", class: "btn btn-success" %>
+  </div>
+
+<% end %>
