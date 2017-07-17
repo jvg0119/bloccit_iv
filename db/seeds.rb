@@ -28,12 +28,25 @@ posts = Post.all
   )
 end
 
+# sponsored_post
+1.upto(100) do |x|
+  SponsoredPost.create(
+  title: RandomData.random_sentence,
+  body: RandomData.random_paragraph,
+  price: rand(25..50),
+  topic: topics.sample
+  )
+end
+
+
+
 puts "".center(40,"*")
 puts
 puts "Finish seeding".center(40)
 puts "#{Topic.count} = topics created".center(40)
 puts "#{Post.count} = posts created".center(40)
 puts "#{Comment.count} = comments created".center(40)
+puts "#{SponsoredPost.count} = sponsored posts created".center(40)
 puts
 puts "".center(40,"*")
 

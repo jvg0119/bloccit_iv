@@ -12,20 +12,21 @@ class PostsController < ApplicationController
 
   def new
     @topic = Topic.find(params[:topic_id])
+    # @post = @topic.posts.new # does not matter if associated or not
     @post = Post.new
-    # @topic = Topic.find(params[:topic_id])
   end
 
   def create
-    #raise
+    # these 2 are also OK
     # @topic = Topic.find(params[:topic_id])
     # @post = @topic.posts.new
+
     @post = Post.new
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
 
-   @topic = Topic.find(params[:topic_id])
-   @post.topic = @topic
+    @topic = Topic.find(params[:topic_id])
+    @post.topic = @topic
 
     if @post.save
       flash[:notice] = "Your post was saved successfully!"
@@ -35,7 +36,6 @@ class PostsController < ApplicationController
     else
       flash[:error] = "There was an error saving the post. Please try again."
       render :new
-      #raise
     end
   end
 
@@ -47,9 +47,6 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
-
-    # @topic = Topic.find(params[:topic_id])
-    # @post.topic = @topic
 
     if @post.update(title: @post.title, body: @post.body)
       flash[:notice] = "Post was updated successfully!"
@@ -68,7 +65,8 @@ class PostsController < ApplicationController
     if @post.destroy
       flash[:notice] = "The post was deleted."
       # redirect_to posts_path
-      redirect_to(@post.topic)
+      #redirect_to(@post.topic)  # topic show page
+      redirect_to(topic_path(@post.topic))
     else
       flash[:error] = "There was an error deleting the post. Please try again."
       render :show

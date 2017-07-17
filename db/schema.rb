@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715002614) do
+ActiveRecord::Schema.define(version: 20170716192837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20170715002614) do
     t.index ["topic_id"], name: "index_posts_on_topic_id"
   end
 
+  create_table "sponsored_posts", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "price"
+    t.bigint "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_sponsored_posts_on_topic_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.boolean "public", default: true
@@ -41,4 +51,5 @@ ActiveRecord::Schema.define(version: 20170715002614) do
   end
 
   add_foreign_key "comments", "posts"
+  add_foreign_key "sponsored_posts", "topics"
 end

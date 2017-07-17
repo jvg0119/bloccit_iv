@@ -8,6 +8,7 @@ namespace :seed do
     ActiveRecord::Base.connection.reset_pk_sequence!('topics')
     ActiveRecord::Base.connection.reset_pk_sequence!('posts')
     ActiveRecord::Base.connection.reset_pk_sequence!('comments')
+    ActiveRecord::Base.connection.reset_pk_sequence!('sponsored_posts')
 
     # create topics
     1.upto(15) do |x|
@@ -36,14 +37,31 @@ namespace :seed do
       )
     end
 
+    # sponsored_post
+    1.upto(100) do |x|
+      SponsoredPost.create(
+      title: "Sponsored Post Title number #{x}",
+      body: "sponsored post body number #{x}",
+      price: rand(25..50)
+
+      topic: topics.sample
+      )
+    end
+
     puts "".center(40,"*")
     puts
     puts "Finish seeding".center(40)
     puts "#{Topic.count} = topics created".center(40)
+    puts "#{Topic.first.id} = SponsoredPost.id".center(40)
     puts "#{Post.count} = posts created".center(40)
+    puts "#{Post.first.id} = SponsoredPost.id".center(40)
     puts "#{Comment.count} = comments created".center(40)
-    puts
+    puts "#{Comment.first.id} = SponsoredPost.id".center(40)
+    puts "#{SponsoredPost.count} = sponsored_posts created".center(40)
+    puts "#{SponsoredPost.first.id} = SponsoredPost.id".center(40)
     puts "".center(40,"*")
+
+
 
   end
 end
