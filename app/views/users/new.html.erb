@@ -13,7 +13,7 @@
             <li><%= msg %></li>
           </ul>
         <% end %>
-      </div>  
+      </div>
     <% end %>
 
       <!-- <div class="form-group"> -->
@@ -29,12 +29,12 @@
 
       <%= form_tag_group(@user.errors[:name]) do %>
         <%= f.label :password %>
-        <%= f.text_field :password, class: "form-control", placeholder: "Enter password" %>
+        <%= f.password_field :password, class: "form-control", placeholder: "Enter password" %>
       <% end %>
 
       <%= form_tag_group(@user.errors[:name]) do %>
         <%= f.label :password_confirmation %>
-        <%= f.text_field :password_confirmation, class: "form-control", placeholder: "Enter password" %>
+        <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Enter password" %>
       <% end %>
 
       <div class="form-group">
