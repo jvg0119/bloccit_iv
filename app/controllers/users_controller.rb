@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-
+  skip_before_action :verify_authenticity_token
+  
   def new
     @user = User.new
   end
@@ -17,6 +18,14 @@ class UsersController < ApplicationController
       flash[:error] = "There was an error saving user.Please try again."
       render :new
     end
+  end
+
+  def confirm
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
   end
 
 end
