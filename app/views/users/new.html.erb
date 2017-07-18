@@ -1,0 +1,47 @@
+<h1>Sign up</h1>
+
+<cif class="row">
+  <div class="col-sm-8">
+
+    <%= form_for @user do |f| %>
+
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize @user.errors.count, "error" %></h4>
+        <% @user.errors.full_messages.each do |msg| %>
+          <ul>
+            <li><%= msg %></li>
+          </ul>
+        <% end %>
+      </div>  
+    <% end %>
+
+      <!-- <div class="form-group"> -->
+      <%= form_tag_group(@user.errors[:name]) do %>
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control", placeholder: "Enter name", autofocus: true %>
+      <% end %>
+
+      <%= form_tag_group(@user.errors[:name]) do %>
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "form-control", placeholder: "Enter email" %>
+      <% end %>
+
+      <%= form_tag_group(@user.errors[:name]) do %>
+        <%= f.label :password %>
+        <%= f.text_field :password, class: "form-control", placeholder: "Enter password" %>
+      <% end %>
+
+      <%= form_tag_group(@user.errors[:name]) do %>
+        <%= f.label :password_confirmation %>
+        <%= f.text_field :password_confirmation, class: "form-control", placeholder: "Enter password" %>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.submit "Save", class: "btn btn-success" %>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
