@@ -19,10 +19,16 @@
         <li><%= link_to "About", about_path %></li>
 
         <div class="pull-right user-info">
-          <%= link_to "Sign up", new_user_path %>
+          <% if current_user %>
+            <%= current_user.name %>
+            <%= link_to "Sign out", session_path(current_user), method: :delete %>
+          <% else %>
+            <%= link_to "Sign in", new_session_path %> |
+            <%= link_to "Sign up", new_user_path %>
+          <% end %>
           <%#= link_to "Bloccit", root_path %>
         </div>
-        
+
       </ul>
 
       <% if flash[:notice] %>

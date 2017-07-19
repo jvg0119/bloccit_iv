@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:new_user_attributes)  do
+  let(:new_user_attributes)  do # hash of attributes for user
     {
       name: "BlocHead",
       email: "blochead@bloc.io",
@@ -55,6 +55,11 @@ RSpec.describe UsersController, type: :controller do
     it "sets user password_confirmation propeerly" do
       post :create, params: { user: new_user_attributes }
       expect(assigns(:user).password_confirmation).to eq(new_user_attributes[:password_confirmation])
+    end
+    it "logs the user in after signing up" do
+      post :create, params: { user: new_user_attributes }
+      expect(session[:user_id]).to eq(assigns(:user).id)
+      # assign session[:user_id] to the user who signed up
     end
   end
 
