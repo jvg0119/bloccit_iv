@@ -13,11 +13,11 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new
-    @topic.name = params[:topic][:name]
-    @topic.public = params[:topic][:public]
-    @topic.description = params[:topic][:description]
-  #  byebug
+    # @topic = Topic.new
+    # @topic.name = params[:topic][:name]
+    # @topic.public = params[:topic][:public]
+    # @topic.description = params[:topic][:description]
+    @topic = Topic.new(topic_params)
     if @topic.save
       flash[:notice] = "The topic was saved successfully!"
       redirect_to @topic
@@ -33,10 +33,11 @@ class TopicsController < ApplicationController
 
   def update
     @topic = Topic.find(params[:id])
-    @topic.name = params[:topic][:name]
-    @topic.public = params[:topic][:public]
-    @topic.description = params[:topic][:description]
-    if @topic.update_attributes(name: @topic.name, public: @topic.public, description: @topic.description)
+    # @topic.name = params[:topic][:name]
+    # @topic.public = params[:topic][:public]
+    # @topic.description = params[:topic][:description]
+    # if @topic.update_attributes(name: @topic.name, public: @topic.public, description: @topic.description)
+    if @topic.update_attributes(topic_params)
       flash[:notice] = "The topic was udated successfully!"
       redirect_to @topic
     else
@@ -53,5 +54,9 @@ class TopicsController < ApplicationController
     end
   end
 
-
+  private
+  def topic_params
+    params.require(:topic).permit(:name, :public, :description)
+  end
+  
 end

@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :require_sign_in, except: [:show]
+
   # def index
   #   @posts = Post.all
   # end
@@ -20,22 +22,32 @@ class PostsController < ApplicationController
     #raise
     # @topic = Topic.find(params[:topic_id])
     # @post = @topic.posts.new
-    @post = Post.new
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
 
-   @topic = Topic.find(params[:topic_id])
-   @post.topic = @topic
+    # @post = Post.new
+    # @post.title = params[:post][:title]
+    # @post.body = params[:post][:body]
+    #
+    # @topic = Topic.find(params[:topic_id])
+    # @post.topic = @topic
+    # @post.user = current_user
+
+    # @topic = Topic.find(params[:topic_id])
+    # @post = @topic.posts.new(params[:post]) # forbidden mass assignment
+
+    # this is the long way
+    # @post = @topic.posts.new(params.require(:post).permit(:title, :body))
+    # @post.user = current_user
+
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.new(post_params) # proper use of strong parameters
+    @post.user = current_user
 
     if @post.save
       flash[:notice] = "Your post was saved successfully!"
-      #redirect_to post_path(@post) # w/o nesting
-      #redirect_to topic_post_path(@topic, @post)
-      redirect_to [@topic, @post] #shortcut
+      redirect_to [@topic, @post]
     else
       flash[:error] = "There was an error saving the post. Please try again."
       render :new
-      #raise
     end
   end
 
@@ -45,21 +57,12 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
-
-    # @topic = Topic.find(params[:topic_id])
-    # @post.topic = @topic
-
-    if @post.update(title: @post.title, body: @post.body)
+    if @post.update_attributes(post_params)
       flash[:notice] = "Post was updated successfully!"
-    #  byebug
-    #  redirect_to @post # w/o nesting
       redirect_to [@post.topic, @post]
-    #  redirect_to [@topic, @post]
     else
       flash[:error] = "There was a problem updating post. Please try again."
-      render[:edit]
+      render :edit
     end
   end
 
@@ -73,6 +76,11 @@ class PostsController < ApplicationController
       flash[:error] = "There was an error deleting the post. Please try again."
       render :show
     end
+  end
+
+  private
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 
 end

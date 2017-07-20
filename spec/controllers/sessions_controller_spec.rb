@@ -29,7 +29,7 @@ RSpec.describe SessionsController, type: :controller do
     end
     it "flashes #error with bad email address" do
       post :create, params: { session: { email: "bad email" } } # same as above w/o password
-      expect(flash.now[:error]).to be_present
+      expect(flash.now[:alert]).to be_present
       # p flash.now[:alert]
       # p my_user
       # puts "==="

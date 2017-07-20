@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Welcome to bloccit #{@user.name}!"
       redirect_to root_path
     else
-      flash[:error] = "There was an error saving user.Please try again."
+      flash[:alert] = "There was an error saving user.Please try again."
       render :new
     end
   end

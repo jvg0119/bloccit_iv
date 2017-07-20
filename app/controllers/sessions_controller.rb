@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Welcome #{user.name}."
       redirect_to root_url
     else
-      flash.now[:error] = 'Invalid email/password combination'
+      flash.now[:alert] = 'Invalid email/password combination'
       render :new
     end
   end
