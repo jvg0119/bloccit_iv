@@ -4,6 +4,12 @@ require 'random_data'
 User.create!(
   name: "Joe",
   email: "joe@example.com",
+  password: "password",
+  role: "admin"
+)
+User.create!(
+  name: "Member",
+  email: "member@example.com",
   password: "password"
 )
 5.times do
@@ -48,6 +54,8 @@ puts "".center(40,"*")
 puts
 puts "Finish seeding".center(40)
 puts "#{User.count} = users created".center(40)
+puts "#{User.admin.count} = admin users created".center(40)
+puts "#{User.member.count} = member users created".center(40)
 puts "#{Topic.count} = topics created".center(40)
 puts "#{Post.count} = posts created".center(40)
 puts "#{Comment.count} = comments created".center(40)

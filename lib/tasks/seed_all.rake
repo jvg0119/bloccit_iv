@@ -8,12 +8,39 @@ namespace :seed do
     ActiveRecord::Base.connection.reset_pk_sequence!('topics')
     ActiveRecord::Base.connection.reset_pk_sequence!('posts')
     ActiveRecord::Base.connection.reset_pk_sequence!('comments')
+    User.destroy_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('users')
+
+    # create users
+    User.create!(
+      name: "Joe",
+      email: "joe@example.com",
+      password: "password",
+      role: "admin"
+    )
+    User.create!(
+      name: "Admin",
+      email: "admin@example.com",
+      password: "password",
+      role: "admin"
+    )
+    User.create!(
+      name: "Member",
+      email: "member@example.com",
+      password: "password"
+    )
+    User.create!(
+      name: "John",
+      email: "john@example.com",
+      password: "password"
+    )
+    users = User.all
 
     # create topics
     1.upto(15) do |x|
       Topic.create!(
       name: "My Topic Name number: #{x}",
-      description: "this is the topic description for topic number: #{x}",
+      description: "this is the topic description for topic number: #{x}"
       )
     end
     topics = Topic.all
@@ -23,7 +50,8 @@ namespace :seed do
       Post.create!(
       title: "My Post Title number: #{x}",
       body: "this is the post body for post number: #{x}",
-      topic: topics.sample
+      topic: topics.sample,
+      user: users.sample
       )
     end
     posts = Post.all
@@ -39,6 +67,9 @@ namespace :seed do
     puts "".center(40,"*")
     puts
     puts "Finish seeding".center(40)
+    puts "#{User.count} = users created".center(40)
+    puts "#{User.admin.count} = admin users created".center(40)
+    puts "#{User.member.count} = member users created".center(40)
     puts "#{Topic.count} = topics created".center(40)
     puts "#{Post.count} = posts created".center(40)
     puts "#{Comment.count} = comments created".center(40)
