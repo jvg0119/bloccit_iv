@@ -6,6 +6,8 @@ class TopicsController < ApplicationController
 
   def show
     @topic = Topic.find(params[:id])
+    # @posts = @topic.posts.unscoped.ordered_by_reverse_created_at
+    # @posts = @topic.posts.unscoped.ordered_by_title
   end
 
   def new
@@ -58,5 +60,5 @@ class TopicsController < ApplicationController
   def topic_params
     params.require(:topic).permit(:name, :public, :description)
   end
-  
+
 end

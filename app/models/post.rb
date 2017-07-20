@@ -11,6 +11,11 @@ class Post < ApplicationRecord
   validates :topic, presence: true
   validates :user, presence: true
 
-  default_scope { order('created_at DESC')}
+  default_scope { order('created_at DESC')} # newest first or on top
+
+  # default_scope is always used unless you use .unscoped  method
+  # like so:   Post.unscoped.ordered_by_title
+  scope :ordered_by_title, -> { order(title: :DESC) } # title ASC number, symbos, Caps, small first
+  scope :ordered_by_reverse_created_at, -> { order('created_at ASC')  } # oldest first or on top
 
 end
