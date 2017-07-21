@@ -1,6 +1,10 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: [:show]
-  before_action :authorized_user, except: [:show, :new, :create]
+  before_action :authorized_user, except: [:show, :new, :create, :edit, :update]
+  before_action :moderator_user, only: [:edit, :update]
+  # for the assignment cp 40 Authorization
+  # added before_action :moderator_user
+  # made sure it did not conflict with authorize_user
 
   def show
     @post = Post.find(params[:id])
@@ -59,6 +63,14 @@ class PostsController < ApplicationController
   def authorized_user
     post = Post.find(params[:id])
     unless post.user == current_user || current_user.admin?
+      flash[:alert] = "You are not authorized to do this action."
+      redirect_to [post.topic, post]
+    end
+  end
+
+  def moderator_user
+    post = Post.find(params[:id])
+    unless (post.user == current_user) || current_user.moderator? || current_user.admin?
       flash[:alert] = "You are not authorized to do this action."
       redirect_to [post.topic, post]
     end

@@ -1,6 +1,10 @@
 class TopicsController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, except: [:index, :show]
+  before_action :authorize_user, except: [:index, :show, :edit, :update]
+  before_action :moderator_user, only: [:edit, :update]
+    # for the assignment cp 40 Authorization
+    # added before_action :moderator_user
+    # made sure it did not conflict with authorize_user
 
   def index
     @topics = Topic.all
@@ -30,6 +34,7 @@ class TopicsController < ApplicationController
   end
 
   def update
+
     @topic = Topic.find(params[:id])
     if @topic.update_attributes(topic_params)
       flash[:notice] = "The topic was udated successfully!"
@@ -56,6 +61,13 @@ class TopicsController < ApplicationController
   def authorize_user
     unless current_user.admin?
       flash[:alert] = "You must be an admin to do that."
+      redirect_to topics_path
+    end
+  end
+
+  def moderator_user
+    unless current_user.moderator? || current_user.admin?
+      flash[:alert] = "You are not authorize to do this action."
       redirect_to topics_path
     end
   end

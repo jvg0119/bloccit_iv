@@ -141,6 +141,100 @@ RSpec.describe TopicsController, type: :controller do
     end
   end   # member
 
+
+# ====================
+# assignment cp 40 Authorization
+# moderator  Can update, but not create or delete, existing topics.
+  context "moderator" do
+    before do
+      user = User.create!(name: "Bloccit User", email: "user@Bloccit.com", password: "password", role: :moderator)
+      create_session(user)
+    end
+
+    describe "GET #index" do  # same as member & guest
+      before { get :index }
+      it "returns http success" do
+        expect(response).to have_http_status(:success)
+      end
+      it "assigns Topic.all to @topics" do
+        expect(assigns(:topics)).to eq([my_topic])
+      end
+    end   # GET #index
+
+    describe "GET #show" do   # same as member & guest
+      before { get :show, params: { id: my_topic.id } }
+      it "returns http success" do
+        expect(response).to have_http_status(:success)
+      end
+      it "assigns my_topic to @topic" do
+        expect(assigns(:topic)).to eq(my_topic)
+      end
+      it "renders the show template" do
+        expect(response).to render_template(:show)
+      end
+    end   # GET #show
+
+    describe "GET #new" do   # redirects to topics index; he's already signed in
+      it "returns http redirect" do
+        get :new
+        expect(response).to redirect_to(topics_path)
+      end
+    end   # GET #new
+
+    describe "POST #create" do  # redirects to topics index; he's already signed in
+      it "returns http redirect" do
+        post :create, params: { topic: { name: RandomData.random_sentence, description: RandomData.random_paragraph } }
+        expect(response).to redirect_to(topics_path)
+      end
+    end   # POST #create
+
+    describe "GET #edit" do   # moderator can do this action; same as admin
+      before { get :edit, params: { id: my_topic.id } }
+      it "returns the http success" do
+        expect(response).to have_http_status(:success)
+      end
+      it "assigns topic to be updated to @topic" do
+        topic_instance = assigns(:topic)
+
+        expect(topic_instance.id).to eq(my_topic.id)
+        expect(topic_instance.name).to eq(my_topic.name)
+        # expect(topic_instance.public).to eq(my_topic.public)
+        expect(topic_instance.description).to eq(my_topic.description)
+      end
+      it "renders the edit template" do
+        expect(response).to render_template(:edit)
+      end
+    end   # GET #edit
+
+    describe "PUT #update" do   # moderator can do this action; same as admin 
+      it "updates topic with expected attributes" do
+        new_name = RandomData.random_sentence
+        new_description = RandomData.random_paragraph
+        put :update, params: { id: my_topic.id, topic: { name: new_name, description: new_description } }
+        updated_topic = assigns(:topic)
+
+        expect(updated_topic.id).to eq(my_topic.id)
+        expect(updated_topic.name).to eq(new_name)
+        expect(updated_topic.description).to eq(new_description)
+      end
+      it "redirects to the updated topic" do
+        new_name = RandomData.random_sentence
+        new_description = RandomData.random_paragraph
+        put :update, params: { id: my_topic.id, topic: { name: new_name, description: new_description } }
+        #expect(response).to redirect_to(assigns(:topic)) # OK
+        expect(response).to redirect_to(my_topic)
+      end
+    end   # PUT #update
+
+    describe "DELETE #destroy" do # redirects to topics index; he's already signed in
+      it "returns http redirect" do
+        delete :destroy, params: { id: my_topic.id }
+        expect(response).to redirect_to(topics_path)
+      end
+    end   # DELETE #destroy
+  end   # moderator
+
+
 # ====================
 # admin
   context "admin" do

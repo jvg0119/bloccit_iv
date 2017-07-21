@@ -30,9 +30,9 @@ RSpec.describe User, type: :model do
     end
     it "responds to admin?" do
       expect(user).to respond_to("admin?")
-      p user
-      puts
-      p :admin?
+      # p user
+      # puts
+      # p :admin?
     #  byebug
     end
     it "responds to member?" do
@@ -51,6 +51,9 @@ RSpec.describe User, type: :model do
       it "returns false for #admin?" do
         expect(user.admin?).to be_falsey
       end
+      it "returns false for #moderator?" do
+        expect(user.moderator?).to be_falsey
+      end
     end
     context "admin user" do
       before do
@@ -62,7 +65,26 @@ RSpec.describe User, type: :model do
       it "returns false for #member?" do
         expect(user.member?).to be_falsey
       end
+      it "returns false for #moderator?" do
+        expect(user.moderator?).to be_falsey
+      end
     end
+
+    context "moderator user" do
+      before do
+        user.moderator!
+      end
+      it "returns true for #moderator?" do
+        expect(user.moderator?).to be_truthy
+      end
+      it "returns false for #member?" do
+        expect(user.member?).to be_falsey
+      end
+      it "returns false for #admin?" do
+        expect(user.admin?).to be_falsey
+      end
+    end
+
   end
 
   describe "invalid user" do
