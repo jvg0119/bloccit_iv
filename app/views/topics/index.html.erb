@@ -3,18 +3,25 @@
 <div class="row">
   <div class="col-md-8">
 
+    <%#= render @topics %>
+
     <% @topics.each do |topic| %>
+      <%= render partial: 'topic', locals: { topic: topic } %>
+    <% end %>
+
+    <!-- moved to partial _topic.html.erb
+
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-            <%= link_to topic.name, topic_path(topic) %>
+            <%#= link_to topic.name, topic_path(topic) %>
           </h4>
           <small>
-            <%= topic.description %>
+            <%#= topic.description %>
           </small>
         </div>
       </div>
-    <% end %>
+     -->
 
   </div>
 

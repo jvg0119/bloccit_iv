@@ -12,20 +12,23 @@
     <% if @topic.posts.any? %>
       <h4>Posts for this topic: </h4>
 
-      <% @topic.posts.each do |post| %>
+      <%= render @topic.posts %>
+
+      <!-- moved to partial _post.html.erb
+      <%# @topic.posts.each do |post| %>
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
             <%#= link_to(post.title, [post.topic, post]) %>
-            <%= link_to post.title, topic_post_path(@topic, post) %>
+            <%#= link_to post.title, topic_post_path(@topic, post) %>
           </h4>
           <small>
-            submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %><br>
-            <%= post.comments.count %> Comments
+            submitted <%#= time_ago_in_words(post.created_at) %> ago by <%#= post.user.name %><br>
+            <%#= post.comments.count %> Comments
           </small>
         </div>
       </div>
-      <% end %>
+      <%# end %> -->
 
     <% else %>
       <h4>No post for this topic:</h4>
