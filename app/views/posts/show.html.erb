@@ -16,4 +16,49 @@
       </div>
     <% end %>
 
+
+
+<div class="col-md-8">
+  <% if @post.comments.any? %>
+    <h4><%= pluralize @post.comments.count, "comment" %> for this post: </h4>
+
+      <%#= render partial: 'comments/comment', collection: @post.comments %> <!-- OK but longer -->
+      <%= render @post.comments %>
+
+  <% else %>
+    <h4>No comment for this post:</h4>
+  <% end %>
+
+  <% if current_user %>
+
+    <h4>Add a comment:</h4>
+
+    <%#= render partial: 'comments/form', locals: { comment: @post.comments.new, post: @post } %> <!-- OK -->
+    <%= render 'comments/form', comment: Comment.new, post: @post  %> <!-- shorter version -->
+
+  <!--
+    <%#= form_for [@post, @post.comments.new] do |f| %>
+
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="form-group">
+            <%#= f.label :body, class: 'sr-only' %>
+            <%#= f.text_area :body, class: "form-control", placeholder: "Enter a new comment" %>
+          </div>
+
+          <div class="form-group">
+            <%#= f.submit "Submit Comment", class: "btn btn-success pull-right" %>
+          </div>
+
+        </div>
+      </div>
+
+    <%# end %> -->
+
+    <% end %>
+
+
+</div>
+
 </div>

@@ -60,7 +60,8 @@ namespace :seed do
     100.times do |x|
       Comment.create!(
       body: "this is a comment body number #{x}",
-      post: posts.sample
+      post: posts.sample,
+      user: users.sample
       )
     end
 

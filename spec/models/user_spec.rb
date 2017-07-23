@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { User.create!(name: "Blocit Use", email: "user@bloccit.com", password: "password") }
 
+# cp 39 posts-users  associate post & user models
   it { is_expected.to have_many(:posts) }
-  # cp 39 posts-users  associate post & user models
+  it { is_expected.to have_many(:comments) } 
 
   # shoulda tests for name
   it { is_expected.to validate_presence_of(:name) }
@@ -30,9 +31,9 @@ RSpec.describe User, type: :model do
     end
     it "responds to admin?" do
       expect(user).to respond_to("admin?")
-      p user
-      puts
-      p :admin?
+      # p user
+      # puts
+      # p :admin?
     #  byebug
     end
     it "responds to member?" do

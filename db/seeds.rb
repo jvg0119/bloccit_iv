@@ -46,7 +46,8 @@ posts = Post.all
 100.times do
   Comment.create!(
   body: RandomData.random_paragraph,
-  post: posts.sample
+  post: posts.sample,
+  user: users.sample
   )
 end
 

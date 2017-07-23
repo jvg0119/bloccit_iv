@@ -16,7 +16,7 @@ RSpec.describe Post, type: :model do
   # it { should belong_to(:topic) } # OK, same as below
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to have_many(:comments) } # not on the bloc instructions
+  it { is_expected.to have_many(:comments) } # adding this now on cp 41 comments 
 
   describe "attributes" do
     #it "has title and body" do
