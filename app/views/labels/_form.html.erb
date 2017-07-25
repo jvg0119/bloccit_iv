@@ -1,0 +1,18 @@
+
+<div class="form_tag_group">
+  <%= f.label :labels %>
+
+  <%= f.text_field :labels, class: 'form-control', placeholder: 'Enter labels (separated by commas)',
+    value: labels.map(&:name).join(', ') %>
+</div>
+
+    <!--
+    we use a text field so that a user can submit multiple labels at once.
+    We set the value of the text field to labels.map(&:name).join(', ').
+    Let's break down  labels.map(&:name).join(', ').
+    labels is the array of label objects.
+    map iterates over each label object and creates a new array where each value in the new array is a label name.
+    We then use .join(', ') on the new array to create a string of labels
+    new_labels = labels.map(&:name)
+    labels_string = new_labels.join(', ')
+    -->

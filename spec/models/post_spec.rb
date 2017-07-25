@@ -13,10 +13,15 @@ RSpec.describe Post, type: :model do
   # adding user scope to post
   let(:post) { topic.posts.create!(title: title, body: body, user: user )}
 
+
+  it { is_expected.to have_many(:labelings) }
+  it { is_expected.to have_many(:labels).through(:labelings) }
+
+
   # it { should belong_to(:topic) } # OK, same as below
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }
-  it { is_expected.to have_many(:comments) } # adding this now on cp 41 comments 
+  it { is_expected.to have_many(:comments) } # adding this now on cp 41 comments
 
   describe "attributes" do
     #it "has title and body" do

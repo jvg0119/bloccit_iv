@@ -1,0 +1,14 @@
+<!-- this partial is going to be displayed in topic show and post show pages
+  it's going to show the labels for topic or show
+-->
+
+<% unless labels.empty? %>
+
+  <p><%= labels_to_buttons(labels) %></p>
+  <!-- <p>
+    <%# labels.each do |label| %> <! no need for helper
+      <%#= link_to label.name, label_path(label), class: "btn btn-xs btn-primary" %>
+    <%# end %>
+  </p> -->
+
+<% end %>

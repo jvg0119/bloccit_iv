@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  #include LabelsHelper
   before_action :require_sign_in, except: [:index, :show]
   before_action :authorize_user, except: [:index, :show]
 
@@ -17,6 +18,7 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new(topic_params)
     if @topic.save
+      @topic.labels = Label.update_labels(params[:topic][:labels])
       flash[:notice] = "The topic was saved successfully!"
       redirect_to @topic
     else
@@ -31,10 +33,17 @@ class TopicsController < ApplicationController
 
   def update
     @topic = Topic.find(params[:id])
-    if @topic.update_attributes(topic_params)
+  #  byebug
+    @topic.assign_attributes(topic_params)
+    if @topic.save
+#    if @topic.update_attributes(topic_params) ## this is equivalent to assign_attributes then save
+#    but .update_attributes is not equivalent to assign_attributes by themselves
+      @topic.labels = Label.update_labels(params[:topic][:labels])
+      # after @topic is saved create the label
       flash[:notice] = "The topic was udated successfully!"
       redirect_to @topic
     else
+
       flash[:error] = "Error updating the topic. Please try again."
       render :edit
     end
