@@ -8,9 +8,7 @@ class Topic < ApplicationRecord
   # using the  Labeling class through the labeleable interface.
   has_many :labels, through: :labelings
 
+  has_many :commentings, as: :commentable
+  has_many :comments, through: :commentings
+
 end
-
-
-
-# it { is_expected.to have_many(:labelings) }
-# it { is_expected.to have_many(:labels).through(:labelings) }

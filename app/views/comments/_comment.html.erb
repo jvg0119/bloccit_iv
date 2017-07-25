@@ -1,16 +1,43 @@
 
+
 <div class="media">
   <div class="media-body">
 
     <small>
       <%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago
-      <% if user_is_authorized_for_comment?(comment) %>
+      <%# if user_is_authorized_for_comment?(comment) %>
         <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
-        | <%= link_to "Delete Comment", [comment.post, comment], method: :delete %>
-      <% end %>
+        | <%#= link_to "Delete Comment", [comment.commentable, comment], method: :delete %>
+
+          <%#= link_to "Delete Comment", [@topic, comment], method: :delete %><!-- works w/ topic -->
+          <%= link_to "Delete Comment", [commentable, comment], method: :delete %>
+      <%# end %>
     </small>
 
-      <p><%= comment.body %></p>
+      <h5><%= comment.body %></h5>
 
   </div>
 </div>
+
+
+
+
+
+
+
+<!--
+<div class="media">
+  <div class="media-body">
+
+    <small>
+      <%#= comment.user.name %> commented <%#= time_ago_in_words comment.created_at %> ago
+      <%# if user_is_authorized_for_comment?(comment) %>
+        <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
+        | <%#= link_to "Delete Comment", [comment.post, comment], method: :delete %>
+      <%# end %>
+    </small>
+
+      <p><%#= comment.body %></p>
+
+  </div>
+</div> -->

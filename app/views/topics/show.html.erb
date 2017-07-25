@@ -9,8 +9,19 @@
   <div class="col-md-8">
     <p class="lead">
       <%= render partial: 'labels/list', locals: { labels: @topic.labels }  %><br>
-      <%=@topic.description %></p>
 
+      <%= @topic.description %></p>
+
+      <% if @topic.comments.any? %>
+      <h4><%= pluralize @topic.comments.size, "comment" %> for topic:</h4>
+        <%= render partial: 'comments/comment', locals: { comments: @topic.comments, commentable: @topic }, collection: @topic.comments %>
+        <%#= render partial: 'comments/comment', locals: { comments: @commentable.comments }, collection: @topic.comments %><!-- remove later -->
+      <% else %>
+        <h4>No comments for topic:</h4>
+      <% end %>
+
+      <%#= render partial: 'comments/form', locals: { commentable: @topic, comment: @topic.comments.new } %>
+      <%= render partial: 'comments/form', locals: { commentable: @topic } %>
     <% if @topic.posts.any? %>
       <h4>Posts for this topic: </h4>
 
@@ -19,7 +30,7 @@
         <div class="media-body">
           <h4 class="media-heading">
             <%#= link_to(post.title, [post.topic, post]) %>
-            <%= link_to post.title, topic_post_path(@topic, post) %>
+            <%= link_to post.title, topic_post_path(@topic, post) %> <!-- post show -->
             <%= render partial: 'labels/list', locals: { labels: post.labels }  %>
           </h4>
           <small>

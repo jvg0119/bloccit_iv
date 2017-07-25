@@ -18,6 +18,11 @@ RSpec.describe Post, type: :model do
   it { is_expected.to have_many(:labels).through(:labelings) }
 
 
+  # assign 42 Labels
+  it { is_expected.to have_many(:commentings) }
+  it { is_expected.to have_many(:comments).through(:commentings) }
+
+
   # it { should belong_to(:topic) } # OK, same as below
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to belong_to(:user) }
