@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724163938) do
+ActiveRecord::Schema.define(version: 20170727213433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "commentings", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_commentings_on_comment_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_commentings_on_commentable_type_and_commentable_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -21,7 +31,9 @@ ActiveRecord::Schema.define(version: 20170724163938) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "topic_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["topic_id"], name: "index_comments_on_topic_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -69,7 +81,9 @@ ActiveRecord::Schema.define(version: 20170724163938) do
     t.integer "role"
   end
 
+  add_foreign_key "commentings", "comments"
   add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "topics"
   add_foreign_key "comments", "users"
   add_foreign_key "labelings", "labels"
 end

@@ -1,17 +1,19 @@
 require 'random_data'
 
 # create users
-User.create!(
-  name: "Joe",
-  email: "joe@example.com",
-  password: "password",
-  role: "admin"
-)
-User.create!(
-  name: "Member",
-  email: "member@example.com",
-  password: "password"
-)
+# User.create!(
+#   name: "Joe",
+#   email: "joe@example.com",
+#   password: "password",
+#   role: "admin"
+# )
+#
+# User.create!(
+#   name: "Member",
+#   email: "member@example.com",
+#   password: "password"
+# )
+
 5.times do
   User.create!(
     name: RandomData.random_name,
@@ -47,9 +49,22 @@ posts = Post.all
   Comment.create!(
   body: RandomData.random_paragraph,
   post: posts.sample,
+  topic: nil,
   user: users.sample
   )
 end
+
+# create comments
+100.times do
+  Comment.create!(
+  body: RandomData.random_paragraph,
+  post: nil,
+  topic: topics.sample,
+  user: users.sample
+  )
+end
+
+comments = Comment.all
 
 puts "".center(40,"*")
 puts

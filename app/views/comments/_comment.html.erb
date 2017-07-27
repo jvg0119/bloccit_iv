@@ -5,8 +5,8 @@
     <small>
       <%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago
       <% if user_is_authorized_for_comment?(comment) %>
-        <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
-        | <%= link_to "Delete Comment", [comment.post, comment], method: :delete %>
+        <!-- Add an or statement to determine which type of comment we are dealing with. -->
+        | <%= link_to "Delete", [comment.topic || comment.post, comment], method: :delete %>
       <% end %>
     </small>
 
