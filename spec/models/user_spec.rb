@@ -5,7 +5,9 @@ RSpec.describe User, type: :model do
 
 # cp 39 posts-users  associate post & user models
   it { is_expected.to have_many(:posts) }
-  it { is_expected.to have_many(:comments) } 
+  it { is_expected.to have_many(:comments) }
+
+  it { is_expected.to have_many(:votes) }
 
   # shoulda tests for name
   it { is_expected.to validate_presence_of(:name) }

@@ -1,0 +1,59 @@
+Notes on assignment 42 Labels
+Make comment a polymorphic object
+
+1. Add test for spec/models/comment_spec.rb
+2. Modify Comment.rb to pass the 2 test for post & topic
+3. Create and add test for spec/models/commenting_spec.rb
+    create the model instead
+    bin/rails g model Commenting    this will also create the test commenting_spec.rb & model commenting .rb
+4. Add test for commenting_spec.rb
+5. Add test for topic.comments & post.comments
+   modify topic_spec.rb
+   modify post_spec.rb
+6. Add test to Label for topic & post
+7. Make sure all model test are passing
+8. Now comments_controller_spec.rb has problems 9 failures
+   This is of coarse the comments controller was not designed to include topic
+9. Add create & destroy comment routes under topics
+10. Check app; did not crash but comments in posts are gone
+11. Display comments on topic show view
+
+
+
+
+
+#
+
+
+
+
+# ==============================
+43. Rails: Voting
+assignment
+After a user submits a post they'll want to vote it up.
+User TDD
+post.rb    after_create :create_vote    private def create_vote associate the post & user & set value = 1
+
+post.rb
+after_create :create_vote
+private
+def create_vote
+  self.votes.create(value: 1, user: current_user)
+end
+
+TDD
+spec/models/post_spec.rb
+describe "#create_vote" do
+  it "creates a vote after creating a post" do
+    post
+  end
+  it "sets the vote with a value of 1" do
+
+  end
+  it "associates the created vote to post's user owner" do 
+  end
+end
+
+
+
+#

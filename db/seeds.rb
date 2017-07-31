@@ -33,12 +33,14 @@ topics = Topic.all
 # Post.destroy_all
 # create posts
 50.times do
-  Post.create!(
-  title: RandomData.random_sentence,
-  body: RandomData.random_paragraph,
-  topic: topics.sample,
-  user: users.sample
+  post = Post.create!(
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph,
+    topic: topics.sample,
+    user: users.sample
   )
+  post.update_attribute(:created_at, rand(10.minutes ..1.year).ago)
+  rand(1..7).times { post.votes.find_or_create_by!(value: [-1, 1].sample, user: users.sample) }
 end
 posts = Post.all
 
@@ -60,6 +62,7 @@ puts "#{User.member.count} = member users created".center(40)
 puts "#{Topic.count} = topics created".center(40)
 puts "#{Post.count} = posts created".center(40)
 puts "#{Comment.count} = comments created".center(40)
+puts "#{Vote.count} = votes created".center(40)
 puts
 puts "".center(40,"*")
 
