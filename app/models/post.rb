@@ -20,6 +20,7 @@ class Post < ApplicationRecord
   #default_scope { order('created_at DESC') }
   default_scope { self.order('rank DESC') }
 
+  after_create :create_vote
 
   def up_votes
     votes.where(value: 1).count
@@ -40,5 +41,10 @@ class Post < ApplicationRecord
     update_attribute(:rank, new_rank)
   end
 
+#  private
+  def create_vote
+    #self.user.votes.create(value: 1, post: self)
+    self.votes.create(value: 1, post: self, user: self.user)
+  end
 
 end

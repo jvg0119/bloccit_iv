@@ -100,4 +100,23 @@ RSpec.describe Post, type: :model do
     end
   end
 
+# =================================
+# assign 43 Voting
+  describe "#create_vote" do
+    it "creates a vote after creating a post" do
+      post = Post.new(title: "Post title", body: "this is the created post body.", topic: topic, user: user)
+      expect(post).to receive(:create_vote).once
+      post.save
+    end
+    it "sets the vote with a value of 1" do
+      expect(post.votes.first.value).to eq(1)
+    end
+    it "associates the created vote to post's user owner" do
+      expect(post.votes.last.user).to eq(post.user)
+    end
+  end   # create_vote
+
+
+
+
 end
