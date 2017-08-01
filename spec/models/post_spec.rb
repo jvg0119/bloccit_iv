@@ -25,6 +25,7 @@ RSpec.describe Post, type: :model do
 
   it { is_expected.to have_many(:votes) }
 
+  it { is_expected.to have_many(:favorites) }
 
 # ==== validations =====
   it { is_expected.to validate_presence_of(:title) }

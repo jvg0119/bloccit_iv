@@ -27,4 +27,31 @@ RSpec.describe Comment, type: :model do
     end
   end
 
+
+# we want to send an email every time a user comments on a favorited post, let's add a callback to Comment
+
+  describe "#after_create" do
+    before do
+      @another_comment = Comment.new(body: "this is another comment.", user: user, post: post) # initialized but not saved @another_comment
+    end
+    it "sends email to users who have favorited the post" do
+      favorite = user.favorites.create(post: post) # this user favorited this post
+      expect(FavoriteMailer).to receive(:new_comment).with(user, post, @another_comment).and_return(double(deliver_now: true))
+      # expect(FavoriteMailer).to receive(:new_comment).with(user, post, @another_comment)#.{deliver_now}
+      # :new_comment  is the method that will be called by FavoriteMailer (FavoriteMailer.new_comment)
+      # .with(user, post, @antoher_comment)  will be required for the :new_comment to work
+      # .and_return(double(deliver_now: true)  this is stubbing deliver_now  so it will not make the actual delivery if test is setup
+      # if not stubbed it will return an error:
+      #   NoMethodError:   undefined method `deliver_now' for nil:NilClass
+      # because the favorite is not saved yet (it's still nil)
+      @another_comment.save!  # save will trigger the expected behavior
+    end
+    it "does not send emails to users who have not favorited the post" do
+      expect(FavoriteMailer).not_to receive(:new_comment)
+        # here FavoriteMailer will not receive :new_comment because the post was not favorited by the user
+      @another_comment.save!
+    end
+  end
+
+
 end

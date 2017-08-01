@@ -20,3 +20,6 @@
 
 notes.txt
 testing.rb
+
+# Ignore application configuration
+/config/application.yml

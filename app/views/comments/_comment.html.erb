@@ -1,16 +1,21 @@
 
-<div class="media">
-  <div class="media-body">
+<%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %> <!-- using anchor for comment url -->
+<!-- <div class="media" id="comment-<%#= comment.id %>">    same as above using div class -->
 
-    <small>
-      <%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago
-      <% if user_is_authorized_for_comment?(comment) %>
-        <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
-        | <%= link_to "Delete Comment", [comment.post, comment], method: :delete %>
-      <% end %>
-    </small>
+  <div class="media">
+    <div class="media-body">
 
-      <p><%= comment.body %></p>
+      <small>
+        <%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago
+        <% if user_is_authorized_for_comment?(comment) %>
+          <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
+          | <%= link_to "Delete Comment", [comment.post, comment], method: :delete %>
+        <% end %>
+      </small>
 
+        <p><%= comment.body %></p>
+
+    </div>
   </div>
-</div>
+
+<% end %>

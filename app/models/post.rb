@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_many :labels, through: :labelings
 
   has_many :votes, dependent: :destroy
-
+  has_many :favorites, dependent: :destroy
 
   validates :topic, presence: true
   validates :title, presence: true, length: { minimum: 5 }

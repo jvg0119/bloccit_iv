@@ -9,6 +9,8 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_many(:votes) }
 
+  it { is_expected.to have_many(:favorites) }
+
   # shoulda tests for name
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(1)}
@@ -33,10 +35,6 @@ RSpec.describe User, type: :model do
     end
     it "responds to admin?" do
       expect(user).to respond_to("admin?")
-      # p user
-      # puts
-      # p :admin?
-    #  byebug
     end
     it "responds to member?" do
       expect(user).to respond_to(:member?)
@@ -79,6 +77,22 @@ RSpec.describe User, type: :model do
     it "should be invalid due to a blank email" do
       expect(user_with_invalid_email).to be_invalid
       expect(user_with_invalid_email).to_not be_valid
+    end
+  end
+
+  describe "#favorite_for(post)" do
+    before do
+      topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+      @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+    end
+
+    it "returns nil if the user has not favorited the post" do
+      expect(user.favorite_for(@post)).to be_nil #eq([]) #be nil
+    end
+    it "returns the appropriate favorite it it exist" do
+      favorite = user.favorites.where(post: @post).create
+      # favorite = user.favorites.create(post: @post) # what is the difference?
+      expect(user.favorite_for(@post)).to eq(favorite)
     end
   end
 

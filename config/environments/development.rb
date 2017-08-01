@@ -27,7 +27,7 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true #false
 
   config.action_mailer.perform_caching = false
 
@@ -51,4 +51,11 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  #config.action_mailer.default_url_options = { host: 'localhost' } # from bloc   email url does not work on this
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }    # need to add post: 3000 for the development env
+  # config.action_mailer.delivery_method = :smtp #:test # test will not send the message to your email but it will look like it did in the logs
+  # config.action_mailer.perform_deliveries = true
+
+
 end

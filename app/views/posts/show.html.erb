@@ -36,6 +36,9 @@
         </div>
       </div>
 
+      <% if current_user %>
+        <%= render partial: 'favorites/favorite', locals: { post: @post } %>
+      <% end %>
 
 <div class="col-md-8">
   <% if @post.comments.any? %>
