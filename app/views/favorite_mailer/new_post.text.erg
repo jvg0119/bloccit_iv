@@ -1,0 +1,8 @@
+
+Your new post: "<%= @post.title %>"
+<%= "=" * (@post.title.length + 12) %>
+You will be receiving email notification when your post is commented. If you don't wish to be notified unfavorite your post.
+
+Post content: <%= @post.body %>
+
+Visit online at:  <%= link_to "View Post on site", topic_url(@post.topic, anchor: "post-#{@post.id}") %>

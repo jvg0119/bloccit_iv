@@ -101,4 +101,19 @@ RSpec.describe Post, type: :model do
     end
   end
 
+  #============
+  # assignment cp 44 Favorites
+  describe "#after_create" do
+    it "creates a favorite for the user who created this post" do
+      post = topic.posts.new(title: "test title for post", body: "test body for post blah blah blah", user: user)
+      expect(post).to receive(:new_post)
+      post.save!
+    end
+    it "emails post's owner that they will receive email notification every time their post is commented"  do  
+      my_post = topic.posts.new(title: "test title for post", body: "test body for post blah blah blah", user: user)
+      expect(FavoriteMailer).to receive(:new_post).with(my_post).and_return(double(deliver_now: true))
+      my_post.save!
+    end
+  end
+
 end

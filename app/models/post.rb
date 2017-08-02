@@ -17,6 +17,8 @@ class Post < ApplicationRecord
   validates :topic, presence: true
   validates :user, presence: true
 
+  after_create :new_post
+
   #default_scope { order('created_at DESC') }
   default_scope { self.order('rank DESC') }
 
@@ -40,5 +42,9 @@ class Post < ApplicationRecord
     update_attribute(:rank, new_rank)
   end
 
+  def new_post
+    favorite = Favorite.create!(post: self, user: self.user)
+    FavoriteMailer.new_post(self).deliver_now
+  end
 
 end

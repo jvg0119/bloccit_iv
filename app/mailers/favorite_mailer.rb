@@ -1,6 +1,6 @@
 class FavoriteMailer < ApplicationMailer
 
-  default from:  "youremail@email.com" 
+  default from:  "joeemail@email.com"
 
   def new_comment(user, post, comment)
 
@@ -19,8 +19,19 @@ class FavoriteMailer < ApplicationMailer
      @post = post
      @comment = comment
 
- # #19
      mail(to: user.email, subject: "New comment on #{post.title}")
+   end
+
+   def new_post(post)
+
+     headers["Message-ID"] = "post/#{post.id}@bloccit_iv.example>"
+     headers["In-Reply-To"] = "<post/#{post.id}@bloccit_iv.example>"
+     headers["References"] = "<post/#{post.id}@bloccit_iv.example>"
+
+     @post = post
+
+     mail(to: post.user.email, subject: "Your new post #{post.title}")
+
    end
 
 

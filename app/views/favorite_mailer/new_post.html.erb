@@ -4,17 +4,18 @@
      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
    </head>
    <body>
-     <h1>New comment to "<%= @post.title %>"</h1>
+     <h1>New post: "<%= @post.title %>"</h1>
+     <h2>For topic: "<%= @post.topic.name %>"</h2>
      <small>
-       By: <%= @comment.user.name %>
+       Posted by: <%= @post.user.name %>
      </small>
      <p>
-       <%= @comment.body %>
-       <!-- this is with achor -->
+       Post content: <%= @post.body %>
      </p>
      <p>
 
-       <%= link_to "View Comment on site", topic_post_url(@post.topic, @post, anchor: "comment-#{@comment.id}") %>
+      <%#= link_to "View Post on site", topic_url(@post.topic, anchor: "post-#{@post.id}") %>
+      <%= link_to "View Post on site", topic_url(@post.topic) %>
        <!-- anchor: option of link_to brings it to the comment id specified -->
        <%#= link_to "View Comment on site", topic_post_url(@post.topic, @post) %>
      </p>
