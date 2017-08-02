@@ -2,15 +2,19 @@
 <div class="media">
   <div class="media-body">
 
-    <small>
-      <%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago
-      <% if user_is_authorized_for_comment?(comment) %>
-        <%#= link_to "Delete Comment", post_comment_path(comment.post, comment), method: :delete %>
-        | <%= link_to "Delete Comment", [comment.post, comment], method: :delete %>
-      <% end %>
-    </small>
+    <% if commentable.comments.any? %>
+      <h4><%= pluralize commentable.comments.count, "comment" %>: </h4>
 
-      <p><%= comment.body %></p>
+      <% commentable.comments.each do |comment| %>
+        <small><%= comment.user.name %> commented <%= time_ago_in_words comment.created_at %> ago</small>
+        <p><%= comment.body %></p>
+        <p><%= link_to "delete comment", [commentable, comment], method: :delete if current_user %></p>
+      <% end %>
+
+    <% else %>
+      <h4>There are no comments:</h4>
+    <% end %>
+
 
   </div>
 </div>

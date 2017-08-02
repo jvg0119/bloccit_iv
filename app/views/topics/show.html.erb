@@ -11,6 +11,14 @@
       <%= render partial: 'labels/list', locals: { labels: @topic.labels }  %><br>
       <%=@topic.description %></p>
 
+      <hr>
+
+        <%= render partial: 'comments/comment', locals: { commentable: @topic } %>
+
+        <%= render partial: 'comments/form', locals: { commentable: @topic } if current_user %>
+
+      <hr>
+
     <% if @topic.posts.any? %>
       <h4>Posts for this topic: </h4>
 

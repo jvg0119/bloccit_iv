@@ -43,13 +43,33 @@ end
 posts = Post.all
 
 # create comments
-100.times do
-  Comment.create!(
+# 100.times do
+#   Comment.create!(
+#   body: RandomData.random_paragraph,
+#   post: posts.sample,
+#   user: users.sample
+#   )
+# end
+
+50.times do
+  topics.sample.comments.find_or_create_by!(
   body: RandomData.random_paragraph,
-  post: posts.sample,
+  #post: posts.sample,
   user: users.sample
   )
 end
+
+50.times do
+  posts.sample.comments.find_or_create_by!(
+  body: RandomData.random_paragraph,
+  #post: posts.sample,
+  user: users.sample
+  )
+end
+
+
+
+
 
 puts "".center(40,"*")
 puts

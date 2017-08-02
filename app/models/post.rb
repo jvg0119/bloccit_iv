@@ -1,7 +1,9 @@
 class Post < ApplicationRecord
   belongs_to :topic#, optional: true # posts needs topic bypass for now
   belongs_to :user
-  has_many :comments, dependent: :destroy
+
+  # has_many :comments, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings

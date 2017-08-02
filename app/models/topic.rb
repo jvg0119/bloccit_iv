@@ -8,6 +8,8 @@ class Topic < ApplicationRecord
   # using the  Labeling class through the labeleable interface.
   has_many :labels, through: :labelings
 
+  has_many :comments, as: :commentable, dependent: :destroy
+
 end
 
 
