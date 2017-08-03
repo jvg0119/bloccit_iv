@@ -20,6 +20,12 @@ class Post < ApplicationRecord
   #default_scope { order('created_at DESC') }
   default_scope { self.order('rank DESC') }
 
+  scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
+  # this is using the ternery operator  ? :    or   if "something" then "give this" else "give that"
+  # if (there is a) user scope all else    joins(:topic).where('topics.public' => true)
+  # self (or Post)    self.joins(:topic)  the ouputs are posts that belongs_to topic  w/ attributes public: true
+  # meaning if not signed in you will only get scped the public topic.posts
+  # private topics are only for signed users
 
   def up_votes
     votes.where(value: 1).count

@@ -45,6 +45,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.2'
   gem 'shoulda', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.8'
 end
 
 group :development do

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create!(name: "Blocit Use", email: "user@bloccit.com", password: "password") }
+  # let(:user) { User.create!(name: "Blocit Use", email: "user@bloccit.com", password: "password") }
+  let(:user) { create(:user) }
 
 # cp 39 posts-users  associate post & user models
   it { is_expected.to have_many(:posts) }
@@ -28,7 +29,8 @@ RSpec.describe User, type: :model do
 
   describe "attributes" do
     it "should have a name and email" do
-      expect(user).to have_attributes(name: "Blocit Use", email: "user@bloccit.com")
+      # expect(user).to have_attributes(name: "Blocit Use", email: "user@bloccit.com")
+      expect(user).to have_attributes(name: user.name, email: user.email)
     end
     it "responds to roles" do
       expect(user).to respond_to(:role)
@@ -67,8 +69,12 @@ RSpec.describe User, type: :model do
   end
 
   describe "invalid user" do
-    let(:user_with_invalid_name) { User.new(name: '', email: "user@bloccit.com") }
-    let(:user_with_invalid_email) { User.new(name: 'Bloccit User', email: "" )}
+    # let(:user_with_invalid_name) { User.new(name: '', email: "user@bloccit.com") }
+    # let(:user_with_invalid_email) { User.new(name: 'Bloccit User', email: "" )}
+
+    let(:user_with_invalid_name) { build(:user, name: '') }   # need to use build instead of create because validation will fail
+    let(:user_with_invalid_email) { build(:user, email: '') } # when you create this object 
+
 
     it "should be invalid due to a blank name" do
       expect(user_with_invalid_name).to be_invalid
@@ -95,6 +101,19 @@ RSpec.describe User, type: :model do
       expect(user.favorite_for(@post)).to eq(favorite)
     end
   end
+
+  describe ".avatar_url" do
+    let(:known_user) { create(:user, email: "blochead@bloc.io") }
+
+    it "returns the proper Gravatar url for a known email entity" do
+      expected_gravatar = "http://gravatar.com/avatar/bb6d1172212c180cfbdb7039129d7b03.png?s=48"
+
+      expect(known_user.avatar_url(48)).to eq(expected_gravatar)
+    end
+
+  end
+
+
 
 
 

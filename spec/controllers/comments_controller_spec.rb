@@ -2,10 +2,16 @@ require 'rails_helper'
 include SessionsHelper
 
 RSpec.describe CommentsController, type: :controller do
-  let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password")}
-  let(:other_user) { User.create!(name: "Other User", email: "other@bloccit.com", password: "password", role: :member)}
-  let(:my_topic) { Topic.create!(name: RandomData.random_name, description: RandomData.random_paragraph) }
-  let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+  # let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password")}
+  # let(:other_user) { User.create!(name: "Other User", email: "other@bloccit.com", password: "password", role: :member)}
+  # let(:my_topic) { Topic.create!(name: RandomData.random_name, description: RandomData.random_paragraph) }
+  # let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+
+  let(:my_user) { create(:user) }
+  let(:other_user) { create(:user) }
+  let(:my_topic) { create(:topic) }
+  let(:my_post) { create(:post, topic: my_topic, user: my_user) }
+
   let(:my_comment) { Comment.create!(body: RandomData.random_sentence, user: my_user, post: my_post) }
 #  let(:my_comment) { my_post.comments.create!(body: RandomData.random_sentence, user: my_user) }  # OK also
 

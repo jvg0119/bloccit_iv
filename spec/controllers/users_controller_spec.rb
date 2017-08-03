@@ -63,4 +63,31 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+
+# ================================
+# cp 45 Public Profiles
+
+  describe "not sighed in" do
+    let(:factory_user) { create(:user) }
+    before do
+      post :create, params: { user: new_user_attributes  }
+    end
+    it "returns http success" do
+      get :show, params: { id: factory_user.id }
+      expect(response).to have_http_status(:success)
+    end
+    it "renders the #show view" do
+      get :show, params: { id: factory_user.id }
+      expect(response).to render_template(:show)
+    end
+    it "assigns the factory_user to @user" do
+      get :show, params: { id: factory_user.id }
+      expect(assigns(:user)).to eq(factory_user)
+    end
+  end   # not sighed in
+
+
+
+
+
 end
