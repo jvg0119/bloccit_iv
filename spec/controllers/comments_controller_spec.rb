@@ -12,9 +12,10 @@ RSpec.describe CommentsController, type: :controller do
   let(:my_topic) { create(:topic) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
 
-  let(:my_comment) { Comment.create!(body: RandomData.random_sentence, user: my_user, post: my_post) }
 #  let(:my_comment) { my_post.comments.create!(body: RandomData.random_sentence, user: my_user) }  # OK also
-
+  #let(:my_comment) { Comment.create!(body: RandomData.random_sentence, user: my_user, post: my_post) }
+  let(:my_comment) { create(:comment, post: my_post,  user: my_user) }
+  
 # =====================================================
   context "guest" do # they cannot create comments
     describe "POST #create" do

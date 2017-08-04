@@ -11,7 +11,9 @@ RSpec.describe Vote, type: :model do
   let(:post) { create(:post) }
 
 
-  let(:vote) { Vote.create!(value: 1, post: post, user: user) }
+#  let(:vote) { Vote.create!(value: 1, post: post, user: user) }
+  let(:vote) { create(:vote, post: post) }   # post needs to be the same post as above in let(:post)
+  #let(:vote) { create(:down_vote) }
 
   it { is_expected.to belong_to(:post) }
   it { is_expected.to belong_to(:user) }
@@ -29,8 +31,5 @@ RSpec.describe Vote, type: :model do
       vote.save!
     end
   end
-
-
-
 
 end

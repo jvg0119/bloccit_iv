@@ -11,8 +11,10 @@ RSpec.describe Label, type: :model do
   let(:post) { create(:post) }
 
 
-  let(:label) { Label.create!(name: 'Label') }
-  let(:label2) {  Label.create!(name: 'Label2')}
+  # let(:label) { Label.create!(name: 'Label') }
+  # let(:label2) {  Label.create!(name: 'Label2')}
+  let(:label) { create(:label) }
+  let(:label2) { create(:label, name: "Label2") }
 
 
   # a label should have_many labelings
@@ -44,9 +46,8 @@ RSpec.describe Label, type: :model do
   describe ".update_labels" do
     it "takes a comma delimited string and returns an array of labels" do
       labels = "#{label.name}, #{label2.name}" # this creates the space; so the it needs the .strip method to remove the space
-    #  labels = "#{label.name},#{label2.name}" # this will not need the .strip
-      labels_as_a = [label, label2]
-
+      labels_as_a = [label, label2] # creates 2 lable objects then assigns to labels_as_a
+                                    # the update_labels does not save duplicate name content
       expect(Label.update_labels(labels)).to eq(labels_as_a)
     end
   end

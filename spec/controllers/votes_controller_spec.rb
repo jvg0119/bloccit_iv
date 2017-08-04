@@ -14,10 +14,12 @@ RSpec.describe VotesController, type: :controller do
    let(:user_post) { create(:post, user: other_user, topic: my_topic) }
 
 
-  let(:my_vote) { Vote.create!(value: 1) }
+  #let(:my_vote) { Vote.create!(value: 1) }
+  let(:my_vote) { create(:vote) }
 
   # adding this post to create my own test
-  let(:other_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+  # let(:other_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+  let(:other_post) { create(:post, topic: my_topic, user: my_user) }
 
   context "guest" do
     describe "POST up_vote" do

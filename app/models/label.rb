@@ -30,7 +30,6 @@ class Label < ApplicationRecord
     # .find_or_create_by   prevents any duplications
     # label.strip removes spaces
       Label.find_or_create_by!(name: label.strip)
-
      end
    end
 

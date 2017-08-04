@@ -73,7 +73,7 @@ RSpec.describe User, type: :model do
     # let(:user_with_invalid_email) { User.new(name: 'Bloccit User', email: "" )}
 
     let(:user_with_invalid_name) { build(:user, name: '') }   # need to use build instead of create because validation will fail
-    let(:user_with_invalid_email) { build(:user, email: '') } # when you create this object 
+    let(:user_with_invalid_email) { build(:user, email: '') } # when you create this object
 
 
     it "should be invalid due to a blank name" do
@@ -110,11 +110,36 @@ RSpec.describe User, type: :model do
 
       expect(known_user.avatar_url(48)).to eq(expected_gravatar)
     end
-
   end
 
+  describe "#has_posts?" do
+    it "returns true if user has created a posts" do
+      create(:post, user: user)
+      expect(user.has_posts?).to be true
+    end
+    it "returns false if user has not created a post" do
+      expect(user.has_posts?).to be false
+    end
+  end
 
+  describe "#has_comments?" do
+    it "returns true if user has posted a comment" do
+      create(:comment, user: user)
+      expect(user.has_comments?).to be true
+    end
+    it "returns false if user has not posted a comment" do
+      expect(user.has_comments?).to be false
+    end
+  end
 
-
+  describe "#has_favorited?" do
+    it "returns true if user has favorited a post" do
+      create(:favorite, user: user)
+      expect(user.has_favorited?).to be true
+    end
+    it "returns false if user has not favorited a post" do
+      expect(user.has_favorited?).to be false
+    end
+  end
 
 end
