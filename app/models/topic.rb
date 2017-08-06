@@ -8,6 +8,8 @@ class Topic < ApplicationRecord
   # using the  Labeling class through the labeleable interface.
   has_many :labels, through: :labelings
 
+  scope :visible_to, -> (user) { user ? all : where(public: true ) }
+
 end
 
 

@@ -4,6 +4,7 @@ include SessionsHelper
 RSpec.describe TopicsController, type: :controller do
 #  let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
   let(:my_topic) { create(:topic) }
+  let(:my_private_topic) { create(:topic, public: false) }
 
 # ====================
 # guest
@@ -13,20 +14,31 @@ RSpec.describe TopicsController, type: :controller do
       it "returns http success" do
         expect(response).to have_http_status(:success)
       end
-      it "assigns Topic.all to @topics" do
+      # it "assigns Topic.all to @topics" do
+      #   expect(assigns(:topics)).to eq([my_topic])
+      # end
+      #it "assigns Topic.all.where(public: true) to @topics" do
+      it "does not include private topics in @topics" do # adding private topics
         expect(assigns(:topics)).to eq([my_topic])
+        expect(assigns(:topics)).not_to eq([my_private_topic])
       end
+
     end   # GET #index
 
     describe "GET #show" do
-      before { get :show, params: { id: my_topic.id } }
       it "returns http success" do
+        get :show, params: { id: my_topic.id }
         expect(response).to have_http_status(:success)
       end
-      it "assigns my_topic to @topic" do
-        expect(assigns(:topic)).to eq(my_topic)
+      # it "assigns my_topic to @topic" do
+      #   expect(assigns(:topic)).to eq(my_topic)
+      # end
+      it "redirects from private topics" do
+        get :show, params: { id: my_private_topic.id }
+        expect(response).to redirect_to(new_session_path)
       end
       it "renders the show template" do
+        get :show, params: { id: my_topic.id }
         expect(response).to render_template(:show)
       end
     end   # GET #show
@@ -84,8 +96,11 @@ RSpec.describe TopicsController, type: :controller do
       it "returns http success" do
         expect(response).to have_http_status(:success)
       end
+      # it "assigns Topic.all to @topics" do
+      #   expect(assigns(:topics)).to eq([my_topic])
+      # end
       it "assigns Topic.all to @topics" do
-        expect(assigns(:topics)).to eq([my_topic])
+        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
       end
     end   # GET #index
 
