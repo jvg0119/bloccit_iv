@@ -14,7 +14,6 @@ class TopicsController < ApplicationController
       flash[:alert] = "You must be signed in to view private topics."
       redirect_to new_session_path
     end
-
   end
 
   def new
@@ -49,7 +48,6 @@ class TopicsController < ApplicationController
       flash[:notice] = "The topic was udated successfully!"
       redirect_to @topic
     else
-
       flash[:error] = "Error updating the topic. Please try again."
       render :edit
     end
