@@ -18,6 +18,7 @@
 
 .byebug_history
 
+*.txt
 notes.txt
 testing.rb
 
