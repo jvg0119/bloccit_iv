@@ -18,7 +18,7 @@
 
 .byebug_history
 
-*.txt
+comment_notes.txt
 notes.txt
 testing.rb
 
