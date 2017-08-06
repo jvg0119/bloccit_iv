@@ -11,8 +11,3 @@ class Topic < ApplicationRecord
   scope :visible_to, -> (user) { user ? all : where(public: true ) }
 
 end
-
-
-
-# it { is_expected.to have_many(:labelings) }
-# it { is_expected.to have_many(:labels).through(:labelings) }
