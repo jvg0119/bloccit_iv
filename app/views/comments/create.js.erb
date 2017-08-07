@@ -6,7 +6,8 @@
 // end
 
 <% if @comment.valid? %>
-  $('.js-comments').prepend("<%= escape_javascript(render(@comment)) %>"); // adds comment at the top
+  //$('.js-comments').prepend("<%#= escape_javascript(render(@comment)) %>"); // adds comment at the top
+  $('.js-comments').append("<%= escape_javascript(render(@comment)) %>"); // adds comment at the bottom
   $('.new-comment').html("<%= escape_javascript(render partial: 'comments/form', locals: { post: @post, comment: @new_comment }) %>"); // clears form
   $('.js-comments-count2').html("<h4><%= pluralize(@comment.post.comments.count, 'comment') %></h4>")
 <% else %>

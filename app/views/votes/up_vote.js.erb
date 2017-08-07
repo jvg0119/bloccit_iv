@@ -1,0 +1,5 @@
+
+$('.js-points').html("<strong><%= @post.points %></strong>");
+$('.js-points2').html("<h4><%= pluralize @post.points, 'point' %></h4>");
+$('.js-up-vote').html('<%= pluralize @post.up_votes, "up vote" %> |');
+$('.js-down-vote').html('<%= pluralize @post.down_votes, "down vote" %>');

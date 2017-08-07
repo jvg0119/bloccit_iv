@@ -5,7 +5,8 @@ class Comment < ApplicationRecord
   validates :body, presence: true,
             length: { minimum: 5 }
 
-  default_scope { self.order('updated_at DESC') }
+  #default_scope { self.order('updated_at DESC') }  # newly updated at the top
+  default_scope { order('updated_at asc') } # newly updated at the bottom
 
   after_save :send_favorite_emails
 

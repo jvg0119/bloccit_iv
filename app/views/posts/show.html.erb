@@ -3,7 +3,9 @@
   <div class="col-md-8">
 
     <div>
-      <%= render partial: 'votes/voting', locals: { post: @post } %>
+
+        <%= render partial: 'votes/voting', locals: { post: @post } %>
+
       <h1>
         <%= @post.title %><br>
         <small>
@@ -27,11 +29,18 @@
   <% end %>
 
   <div class="col-md-4">
-    <h4><%= pluralize @post.points, "point" %></h4>
+    <div class="js-points2">
+      <h4><%= pluralize @post.points, "point" %></h4>
+    </div>
+
     <div>
       <small>
-        <%= pluralize @post.up_votes, "up vote" %> |
-        <%= pluralize @post.down_votes, "down vote" %>
+        <span class="js-up-vote">
+          <%= pluralize @post.up_votes, "up vote" %> |
+        </span>
+        <span class="js-down-vote">
+          <%= pluralize @post.down_votes, "down vote" %>
+        </span>
       </small>
     </div>
   </div>
