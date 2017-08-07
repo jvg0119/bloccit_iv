@@ -16,70 +16,56 @@
 
   </div>
 
-    <% if user_is_authorized_for_post?(@post) %>
+  <% if user_is_authorized_for_post?(@post) %>
 
-      <div class="col-md-4">
-        <%= link_to "Edit Post", edit_topic_post_path(@post.topic, @post), class: "btn btn-success" %>
-        <%= link_to "Delete Post", topic_post_path(@post.topic, @post), method: :delete, data: {confirm: 'Are you sure you want to delete this post?'}, class: "btn btn-danger" %><br>
-        <%= render partial: 'labels/list', locals: { labels: @post.labels }  %>
-      </div>
-    <% end %>
+    <div class="col-md-4">
+      <%= link_to "Edit Post", edit_topic_post_path(@post.topic, @post), class: "btn btn-success" %>
+      <%= link_to "Delete Post", topic_post_path(@post.topic, @post), method: :delete, data: {confirm: 'Are you sure you want to delete this post?'}, class: "btn btn-danger" %><br>
+      <%= render partial: 'labels/list', locals: { labels: @post.labels }  %>
+    </div>
 
-      <div class="col-md-4">
-        <h4><%= pluralize @post.points, "point" %></h4>
-        <div>
-          <small>
-            <%= pluralize @post.up_votes, "up vote" %> |
-            <%= pluralize @post.down_votes, "down vote" %>
-          </small>
-        </div>
-      </div>
-
-      <% if current_user %>
-        <%= render partial: 'favorites/favorite', locals: { post: @post } %>
-      <% end %>
-
-<div class="col-md-8">
-  <% if @post.comments.any? %>
-    <h4><%= pluralize @post.comments.count, "comment" %> for this post: </h4>
-
-      <%#= render partial: 'comments/comment', collection: @post.comments %> <!-- OK but longer -->
-      <%= render @post.comments %>
-
-  <% else %>
-    <h4>No comment for this post:</h4>
   <% end %>
 
+  <div class="col-md-4">
+    <h4><%= pluralize @post.points, "point" %></h4>
+    <div>
+      <small>
+        <%= pluralize @post.up_votes, "up vote" %> |
+        <%= pluralize @post.down_votes, "down vote" %>
+      </small>
+    </div>
+  </div>
+
   <% if current_user %>
+    <%= render partial: 'favorites/favorite', locals: { post: @post } %>
+  <% end %>
 
-    <h4>Add a comment:</h4>
+  <div class="col-md-8">
+    <% if @post.comments.any? %>
 
-    <%#= render partial: 'comments/form', locals: { comment: @post.comments.new, post: @post } %> <!-- OK -->
-    <%= render 'comments/form', comment: Comment.new, post: @post  %> <!-- shorter version -->
-
-  <!--
-    <%#= form_for [@post, @post.comments.new] do |f| %>
-
-      <div class="row">
-        <div class="col-md-6">
-
-          <div class="form-group">
-            <%#= f.label :body, class: 'sr-only' %>
-            <%#= f.text_area :body, class: "form-control", placeholder: "Enter a new comment" %>
-          </div>
-
-          <div class="form-group">
-            <%#= f.submit "Submit Comment", class: "btn btn-success pull-right" %>
-          </div>
-
-        </div>
+      <!-- <div class="js-comments-count2"> -->
+      <div class="js-comments-count2">
+        <h4><%= pluralize @post.comments.count, "comment" %> for this post: </h4>
       </div>
 
-    <%# end %> -->
+      <div class="js-comments">
+        <%= render @post.comments %>
+      </div>
+
+    <% else %>
+      <h4>No comment for this post:</h4>
+    <% end %>
+
+    <% if current_user %>
+
+      <h4>Add a comment:</h4>
+
+      <div class="new-comment">
+        <%= render 'comments/form', comment: Comment.new, post: @post  %>
+      </div>
 
     <% end %>
 
-
-</div>
+  </div>
 
 </div>

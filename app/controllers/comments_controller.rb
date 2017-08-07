@@ -7,25 +7,49 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     # @comment = @post.comments.new(body: params[:comment][:body], user_id: current_user.id) # OK
     @comment.user = current_user
+    @new_comment = Comment.new
+
+    # if @comment.save
+    #   flash[:notice] = "Comment saved successfully!"
+    #   redirect_to [@post.topic, @post] # post show page
+    # else
+    #   flash[:alert] = "Comment failed to save."
+    #   redirect_to [@post.topic, @post] # post show page
+    # end
+
     if @comment.save
       flash[:notice] = "Comment saved successfully!"
-      redirect_to [@post.topic, @post] # post show page
     else
       flash[:alert] = "Comment failed to save."
-      redirect_to [@post.topic, @post] # post show page
     end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
   def destroy
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
+    # if @comment.destroy
+    #   flash[:notice] = "Comment was deleted successfully."
+    #   redirect_to [@post.topic, @post] # post show page
+    # else
+    #   flash[:alert] = "Comment couldn't be deleted. Please try again."
+    #   redirect_to [@post.topic, @post] # post show page
+    # end
+
     if @comment.destroy
       flash[:notice] = "Comment was deleted successfully."
-      redirect_to [@post.topic, @post] # post show page
     else
       flash[:alert] = "Comment couldn't be deleted. Please try again."
-      "did not destroy"
-      redirect_to [@post.topic, @post] # post show page
+    end
+
+    respond_to do |format|
+      format.html
+      format.js # need to add views for  destroy.js.erb
     end
   end
 
@@ -52,6 +76,5 @@ class CommentsController < ApplicationController
       redirect_to [post.topic, post] # post show page
     end
   end
-
 
 end

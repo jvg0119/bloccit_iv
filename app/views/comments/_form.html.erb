@@ -2,7 +2,7 @@
 <%#= form_for [@post, @post.comments.new] do |f| %> <!-- this worked -->
 <%#= form_for [post = Post.find(params[:id]), post.comments.new ] do |f| %> <!-- similar to above -->
 
-<%=  form_for [post, comment] do |f| %>
+<%=  form_for [post, comment], remote: true do |f| %>
 
   <!-- <div class="row"> -->
     <!-- <div class="col-md-8"> -->
