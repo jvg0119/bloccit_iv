@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   before_save { self.email = email.downcase if email.present? }
   before_save { self.role ||= :member }
+  before_create :generate_auth_token
 
   validates :name, presence: true, length: { minimum: 1, maximum: 100 }
 
@@ -30,5 +31,11 @@ class User < ApplicationRecord
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
+  def generate_auth_token
+    loop do
+      self.auth_token = SecureRandom.base64(64)
+      break unless User.find_by(auth_token: auth_token)
+    end
+  end
 
 end

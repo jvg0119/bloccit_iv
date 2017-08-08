@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   resources :labels, only: [:show]
 
   resources :topics do
@@ -18,6 +19,13 @@ Rails.application.routes.draw do
 
   get 'about' => 'welcome#about'
   root 'welcome#index'
+
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index, :show]
+      resources :topics, only: [:index, :show]
+    end
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
