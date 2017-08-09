@@ -12,7 +12,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
       end
       it "finds a user by their authentication token" do
         expect(assigns(:current_user)).to eq(my_user)
-        # assigns(:current_user) is @current_user = User.find_by(auth_token: token)
+        # assigns(:current_user) is @current_user = User.find_by(auth_token: token) in the controller
       end
 
     end   # authenticate_use
