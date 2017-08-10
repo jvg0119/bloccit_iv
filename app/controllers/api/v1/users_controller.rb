@@ -36,5 +36,4 @@ class Api::V1::UsersController < Api::V1::BaseController
     params.require(:user).permit(:name, :email, :password, :role)
   end
 
-
 end

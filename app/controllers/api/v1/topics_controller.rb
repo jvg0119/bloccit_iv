@@ -21,16 +21,6 @@ class Api::V1::TopicsController < Api::V1::BaseController
     end
   end
 
-  # def update
-  #   user = User.find(params[:id])
-  #   if user.update_attributes(user_params)
-  #     render json: user, status: 200
-  #   else
-  #     render json: { error: "User update failed", status: 400 }, status: 400
-  #   end
-  # end
-
-
   def create
     topic = Topic.new(topic_params)
     if topic.valid?

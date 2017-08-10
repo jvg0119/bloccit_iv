@@ -146,23 +146,17 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
     describe "DELETE destroy" do
       before { delete :destroy, params: { id: my_topic.id } }
       it "returns http success" do
-        #delete :destroy, params: { id: my_topic.id }
         expect(response).to have_http_status(:success)
       #  expect(response).to have_http_status(200)
       #  expect(response.body).to eq({ message: "Topic destroyed", status: 200 }.to_json)
       end
       it "returns json type content" do
-        #delete :destroy, params: { id: my_topic.id }
         expect(response.content_type).to eq("application/json")
       end
       it "returns the correct json success message" do
-        #delete :destroy, params: { id: my_topic.id }
-        #json_parse = JSON.parse(response.body)
         expect(response.body).to eq({message: "Topic destroyed", status: 200}.to_json)
-        #expect(json_parse.to_json).to eq({message: "Topic destroyed", status: 200}.to_json)
       end
       it "deletes my_topic" do
-        #delete :destroy, params: { id: my_topic.id }
         expect{Topic.find(my_topic.id)}.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end

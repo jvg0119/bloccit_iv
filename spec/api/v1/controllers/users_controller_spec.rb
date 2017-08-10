@@ -15,7 +15,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     it "PUT update returns http unauthenticated" do
       new_user = build(:user)
       put :update, params: { id: my_user.id, user: { name: new_user.name, email: new_user.email, password: new_user.password } }
-    #  put :update, params: { id: my_user.id, user: attributes_for(:user, name: new_user.name) } # check this later
       expect(response).to have_http_status(401)
     end
     it "POST create returns http unauthenticated" do
@@ -62,7 +61,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         expect(response.content_type).to eq("application/json")
       end
       it "returns my_user serialized" do
-        expect(response.body).to eq([my_user].to_json)   # returns a serialized hash of your object 
+        expect(response.body).to eq([my_user].to_json)   # returns a serialized hash of your object
       end
     end
 
